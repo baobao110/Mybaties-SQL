@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="inter.CardDAO"><!-- 这里指定操作类所在的文件路径 -->
+	<select id="GetCard" resultType="Card"> <!-- 这里是操作类所要调用的方法 --> <!--resultType赋值为方法的返回类型  -->
+		select * from card where number=#{number} and id=#{id}<!--这里的#{} 相当于JDBC中的?这里为了保险起见最好数据库表类的变量和数据库中对应的变量名称相同 -->
+	</select>
+	<update id="modifyPassword">
+		update card set password=#{password} where number=#{number}
+	</update>
+	<update id="modifyMoney">
+		update card set money=#{money} where number=#{number}
+	</update>
+	<insert id="open" useGeneratedKeys="true" keyProperty="id">
+		insert card (number,password,money,createtime,modifytime) value (#{number},#{password},#{money},NOW(),NOW())
+		<!-- 这里如果以后出现这样的下划线可以 不需要理会-->
+	</insert>
+</mapper>
+
